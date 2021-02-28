@@ -479,6 +479,27 @@ def get_tests():
              command='duplicate',
              correct_text='line 1\nline 2\n\n'
             ),
+        Test("Paste incomplete multiline 1",
+             initial_text='line 1\nline 2',
+             initial_selection=cursor(2),
+             initial_clipboard='line 3\nline 4',
+             command='paste',
+             correct_text='line 1\nline 3\nline 4\nline 2'
+            ),
+        Test("Paste incomplete multiline 2",
+             initial_text='line 1\nline 2',
+             initial_selection=cursor(8),
+             initial_clipboard='line 3\nline 4',
+             command='paste',
+             correct_text='line 1\nline 2\nline 3\nline 4'
+            ),
+        Test("Paste incomplete multiline 3",
+             initial_text='line 1\nline 2',
+             initial_selection=cursor(8),
+             initial_clipboard='line 3\nline 4',
+             command='paste',
+             correct_text='line 1\nline 2\nline 3\nline 4'
+            ),
         Test("Multiple selection copy 1",
              initial_text='line 1\nline 2\nline 3',
              initial_selection=cursor(1) + cursor(8),

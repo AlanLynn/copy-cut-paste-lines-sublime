@@ -217,6 +217,10 @@ class CcplPasteCommand(sublime_plugin.TextCommand):
             view.run_command('paste')
             return
 
+        # Multiline clipboard is expected to end with a trailing newline.
+        if not clipboard.endswith('\n'):
+            clipboard += '\n'
+
         # Add a trailing newline to make things easier. It will be removed later.
         append_text(view, edit, '\n')
 
@@ -292,5 +296,3 @@ class CcplDuplicateCommand(sublime_plugin.TextCommand):
 
         # Remove the extra newline that was added earlier.
         view.erase(edit, sublime.Region(view.size() - 1, view.size()))
-
-
