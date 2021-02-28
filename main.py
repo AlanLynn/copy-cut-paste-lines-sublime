@@ -221,7 +221,13 @@ class CcplPasteCommand(sublime_plugin.TextCommand):
         if not clipboard.endswith('\n'):
             clipboard += '\n'
 
-        # Add a trailing newline to make things easier. It will be removed later.
+        view_ended_in_newline = view.substr(view.size() - 1) == '\n'
+
+        # Add a trailing newline when pasting into an empty view.
+        if view.size() == 0:
+            append_text(view, edit, '\n')
+
+        # Add a temporary trailing newline to make things easier. It will be removed later.
         append_text(view, edit, '\n')
 
         expanded_selection = get_expanded_selection(view)
@@ -256,8 +262,13 @@ class CcplPasteCommand(sublime_plugin.TextCommand):
                 paste_position = lines_region.end()
                 insert_without_moving_cursor(view, edit, paste_position, clipboard)
 
-        # Remove the extra newline that was added earlier.
+        # Remove the temporary newline that was added earlier.
         view.erase(edit, sublime.Region(view.size() - 1, view.size()))
+
+        # Restore the ending newline if it existed.
+        view_now_ends_newline = view.substr(view.size() - 1) == '\n'
+        if view_ended_in_newline and not view_now_ends_newline:
+            append_text(view, edit, '\n')
 
 
 class CcplDuplicateCommand(sublime_plugin.TextCommand):

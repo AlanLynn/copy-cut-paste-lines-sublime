@@ -165,7 +165,6 @@ class Test:
 
 
 def get_tests():
-    """Returns an array of all the tests to run."""
     return [
         Test("Empty buffer copy",
              initial_text='',
@@ -192,14 +191,14 @@ def get_tests():
              initial_selection=cursor(0),
              initial_clipboard='line 1\n',
              command='paste',
-             correct_text='line 1'
+             correct_text='line 1\n'
             ),
         Test("Empty buffer paste multiline",
              initial_text='',
              initial_selection=cursor(0),
              initial_clipboard='line 1\nline 2\n',
              command='paste',
-             correct_text='line 1\nline 2'
+             correct_text='line 1\nline 2\n'
             ),
         Test("Empty buffer duplicate",
              initial_text='',
@@ -457,7 +456,7 @@ def get_tests():
              initial_selection=cursor(14),
              initial_clipboard='line 3\n',
              command='paste',
-             correct_text='line 1\nline 2\n\nline 3'
+             correct_text='line 1\nline 2\n\nline 3\n'
             ),
         Test("Paste with trailing newline 3",
              initial_text='line 1\nline 2\n',
